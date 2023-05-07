@@ -306,8 +306,14 @@ do
 		}, library)
 	end
 
-	function library.unload(container)
-		container:Destroy()
+	function library.unload(title)
+		if game.CoreGui:FindFirstChild(title) then
+			for _, gui in ipairs(game.CoreGui:GetChildren()) do
+				if gui.Name == title then
+					gui:Destroy()
+				end
+			end
+		end
 	end
 
 	function library.setTitle(library, title)
