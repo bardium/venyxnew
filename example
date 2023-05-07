@@ -9,11 +9,10 @@ if identifyexecutor and identifyexecutor() == "Celery" then
 end
 -- // Initialising the UI
 local Venyx = loadstring(game:HttpGet("https://raw.githubusercontent.com/bardium/venyxnew/main/source"))()
+Venyx.unload("Venyx")
 local UI = Venyx.new({
 	title = "Venyx"
 })
-
-Venyx.unload("Venyx")
 
 -- // Themes
 local Themes = {
