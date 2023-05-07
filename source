@@ -305,10 +305,14 @@ do
 			pages = {}
 		}, library)
 	end
-	
+
 	function library.unload(title)
 		if game.CoreGui:FindFirstChild(title) then
-			game.CoreGui:FindFirstChild(title):Destroy()
+			for _, gui in ipairs(game.CoreGui:GetChildren()) do
+				if gui.Name == "title" then
+					gui:Destroy()
+				end
+			end
 		end
 	end
 
