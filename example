@@ -1,0 +1,157 @@
+if identifyexecutor and identifyexecutor() == "Celery" then
+	local oldnamecall
+	oldnamecall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
+		if getnamecallmethod() == "HttpGet" and checkcaller() then
+			return httpget(...)
+		end
+		return oldnamecall(self, ...)
+	end))
+end
+-- // Initialising the UI
+local Venyx = loadstring(game:HttpGet("https://raw.githubusercontent.com/bardium/venyxnew/main/source"))()
+local UI = Venyx.new({
+	title = "Venyx"
+})
+
+Venyx.unload("Venyx")
+
+-- // Themes
+local Themes = {
+	Background = Color3.fromRGB(24, 24, 24),
+	Glow = Color3.fromRGB(0, 0, 0),
+	Accent = Color3.fromRGB(10, 10, 10),
+	LightContrast = Color3.fromRGB(20, 20, 20),
+	DarkContrast = Color3.fromRGB(14, 14, 14),  
+	TextColor = Color3.fromRGB(255, 255, 255)
+}
+
+-- // Main Page
+local Main = UI:addPage({
+	title = "Main",
+	icon = 5012544693
+})
+
+-- // Sections for Main Page
+local SectionA = Main:addSection({
+	title = "Section A"
+})
+local SectionB = Main:addSection({
+	title = "Section B"
+})
+
+-- // Section A UI Elements
+SectionA:addToggle({
+	title = "Toggle",
+	callback = function(value)
+		print("Toggled", value)
+	end
+})
+
+SectionA:addButton({
+	title = "Button",
+	callback = function()
+		print("Clicked")
+	end
+})
+
+SectionA:addTextbox({
+	title = "Notification",
+	default = "Default",
+	callback = function(value, focusLost)
+		print("Input", value)
+
+		if (focusLost) then
+			UI:Notify({
+				title = "Title",
+				text = value
+			})
+		end
+	end
+})
+
+-- // Section B UI Elements
+SectionB:addKeybind({
+	title = "Toggle Keybind",
+	key = Enum.KeyCode.One,
+	callback = function()
+		print("Activated Keybind")
+		UI:toggle()
+	end,
+	changedCallback = function(key)
+		print("Changed Keybind", key)
+	end
+})
+
+SectionB:addColorPicker({
+	title = "ColorPicker",
+	default = Color3.fromRGB(50, 50, 50)
+})
+
+SectionB:addColorPicker({
+	title = "ColorPicker2"
+})
+
+SectionB:addSlider({
+	title = "Slider",
+	default = 0,
+	min = -100,
+	max = 100,
+	callback = function(value)
+		print("Dragged", value)
+	end
+})
+
+local dropdownContent = {
+	"Hello",
+	"World",
+	"Hello World",
+	"Word",
+	1,
+	2,
+	3
+}
+SectionB:addDropdown({
+	title = "Dropdown",
+	list = dropdownContent
+})
+
+SectionB:addDropdown({
+	title = "Dropdown",
+	list = dropdownContent,
+	callback = function(text)
+		print("Selected", text)
+	end
+})
+
+SectionB:addButton({
+	title = "Button"
+})
+
+-- // Color Theme Customisation Page
+local Theme = UI:addPage({
+	title = "Theme",
+	icon = 5012544693
+})
+
+local Colors = Theme:addSection({
+	title = "Colors"
+})
+
+for theme, color in pairs(Themes) do
+	Colors:addColorPicker({
+		title = theme,
+		default = color,
+		callback = function(color3)
+			UI:setTheme({
+				theme = theme, 
+				color3 = color3
+			})
+		end
+	})
+end
+
+-- // Load
+UI:SelectPage({
+	page = UI.pages[1], 
+	toggle = true
+})
