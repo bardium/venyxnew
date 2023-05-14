@@ -1,12 +1,3 @@
-if identifyexecutor and identifyexecutor() == "Celery" then
-	local oldnamecall
-	oldnamecall = hookmetamethod(game, '__namecall', newcclosure(function(self, ...)
-		if getnamecallmethod() == "HttpGet" and checkcaller() then
-			return httpget(...)
-		end
-		return oldnamecall(self, ...)
-	end))
-end
 -- // Initialising the UI
 local Venyx = loadstring(game:HttpGet("https://raw.githubusercontent.com/bardium/venyxnew/main/source"))()
 Venyx.unload("Venyx")
